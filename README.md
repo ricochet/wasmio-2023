@@ -1,6 +1,8 @@
-# wasmio demo for wasi-cloud
+# wasmio 2023
 
-Checkout the companion demo from @danbugs is at [danbugs/wasmio-demo](https://github.com/danbugs/wasmio-demo).
+This is the second part of Dan Chiarlone and my demo showing off wasi-cloud.
+
+Checkout the companion demo from @danbugs at [danbugs/wasmio-demo](https://github.com/danbugs/wasmio-demo).
 
 ## What if a component can be run portably across clouds and services?
 
@@ -9,7 +11,7 @@ Let's find out!
 *Caveat Emptor:* The tooling around building components and the APIs for wasi-cloud are under active development.
 Expect many aspects of this to change and note we needed to add a few workarounds.
 
-### Step 1: It starts with a component
+### Step 1: Start with a component
 
 We have a component called `pingpong`. This component is built with the latest and greatest
 Bytecode Alliance source and is essentially a pure component without any host/framework special sauce.
@@ -28,7 +30,7 @@ cargo build --target wasm32-wasi
 wasm-tools component new --output ../deploy/components/pingpong.component.wasm --adapt wasi_snapshot_preview1.wasm pingpong.wasm
 ```
 
-## Step 2: Deploy to a host
+## Step 2: Deploy
 
 Let's imagine for a moment that we just pushed the `pingpong` component to a registry and then pulled it down. The output of the wasm-tools command sent the final `.wasm` to `deploy/components` to simulate this.
 
@@ -60,7 +62,7 @@ wash claims sign --cap "wasmcloud:keyvalue" --cap "wasmcloud:wasi:messaging" --n
 cosmo launch --launch-only
 ```
 
-## Step 3: Infra things
+## Pre-work for infra
 
 If you'd like to replicate this demo to it's fullest, then `cosmo up` a wasmCloud host
 in all the places and architectures, e.g. in a different cloud like AWS, GCP, or on a Rasberry PI.
