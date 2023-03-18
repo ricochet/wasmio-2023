@@ -1,0 +1,12 @@
+[workspace.dependencies]
+anyhow = { version = "1.0.69", default-features = false }
+rmp-serde = { version = "1.1.1" }
+serde = { version = "1.0.152", default-features = false }
+serde_json = { version = "1.0.93", default-features = false }
+wit-bindgen = { version = "0.4.0", default-features = false }
+
+[workspace]
+members = [
+  "deploy/actor",
+  "pingpong"
+]
