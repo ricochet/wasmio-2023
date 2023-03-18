@@ -1,4 +1,4 @@
 default world guest {
-  import pingpong-guest: pkg.pingpong.guest
+  import handler: pkg.wasi-messaging-handler.handler
   export actor: pkg.wasmcloud.actor
 }

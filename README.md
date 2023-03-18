@@ -2,7 +2,7 @@
 
 This is the second part of Dan Chiarlone and my demo showing off wasi-cloud.
 
-Checkout the companion demo from @danbugs at [danbugs/wasmio-demo](https://github.com/danbugs/wasmio-demo).
+Checkout the companion demo from [@danbugs](https://github.com/danbugs) at [danbugs/wasmio-demo](https://github.com/danbugs/wasmio-demo).
 
 ## What if a component can be run portably across clouds and services?
 
@@ -20,7 +20,7 @@ Bytecode Alliance source and is essentially a pure component without any host/fr
 to pings with pongs and the current ping count.
 
 First we build a preview 1 WASI module, then we migrate this module to preview 2. Note that this
-adaption step is temporary until 
+adaption step is temporary until preview 2 stabilizes.
 
 ```bash
 cd pingpong

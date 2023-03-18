@@ -1,5 +1,5 @@
 default world messaging {
-	import producer: pkg.producer
-	import consumer: pkg.consumer
-	export handler: pkg.handler
+  import producer: pkg.producer
+  import consumer: pkg.consumer
+  export handler: pkg.handler
 }

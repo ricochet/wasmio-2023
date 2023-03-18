@@ -1,35 +1,35 @@
 // Due to the fact that multiple interfaces cannot be exported from one component
 // implementation (as of 2023/03/14)
 default interface wasmcloud-kv {
-	/// A key is a unique identifier for a value in a bucket. The key is used to
-	/// retrieve the value from the bucket.
-	type key = string
+  /// A key is a unique identifier for a value in a bucket. The key is used to
+  /// retrieve the value from the bucket.
+  type key = string
 
-	/// A list of keys
-	type keys = list<key>
+  /// A list of keys
+  type keys = list<key>
 
-	/// Get the value associated with the key in the bucket. It returns a incoming-value
-	/// that can be consumed to get the value.
-	///
-	/// If the key does not exist in the bucket, it returns an error.
-	get: func(key: key) -> result<string, string>
+  /// Get the value associated with the key in the bucket. It returns a incoming-value
+  /// that can be consumed to get the value.
+  ///
+  /// If the key does not exist in the bucket, it returns an error.
+  get: func(key: key) -> result<string, string>
 
-	/// Set the value associated with the key in the bucket. If the key already
-	/// exists in the bucket, it overwrites the value.
-	///
-	/// If the key does not exist in the bucket, it creates a new key-value pair.
-	/// If any other error occurs, it returns an error.
-	set: func(key: key, value: string) -> result<_, string>
+  /// Set the value associated with the key in the bucket. If the key already
+  /// exists in the bucket, it overwrites the value.
+  ///
+  /// If the key does not exist in the bucket, it creates a new key-value pair.
+  /// If any other error occurs, it returns an error.
+  set: func(key: key, value: string) -> result<_, string>
 
-	/// Delete the key-value pair associated with the key in the bucket.
-	///
-	/// If the key does not exist in the bucket, it returns an error.
-	delete: func(key: key) -> result<_, string>
+  /// Delete the key-value pair associated with the key in the bucket.
+  ///
+  /// If the key does not exist in the bucket, it returns an error.
+  delete: func(key: key) -> result<_, string>
 
-	/// Check if the key exists in the bucket.
-	///
-	/// If the key does not exist in the bucket, it returns an error.
-	exists: func(key: key) -> result<bool, string>
+  /// Check if the key exists in the bucket.
+  ///
+  /// If the key does not exist in the bucket, it returns an error.
+  exists: func(key: key) -> result<bool, string>
 }
 
 default world keyvalue {

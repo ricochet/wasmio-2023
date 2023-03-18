@@ -8,3 +8,6 @@ crate-type = ["cdylib"]
 
 [dependencies]
 wit-bindgen = { workspace = true, features = ["default"] }
+serde = { workspace = true }
+rmp-serde = { workspace = true }
+serde_json = { workspace = true, features = ["std"] }

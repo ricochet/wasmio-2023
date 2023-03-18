@@ -1,29 +1,25 @@
-interface guest {
-    pingpong: func() -> string
-}
-
 /// An interface for a producer.
 interface producer { 
-    use pkg.types.{broker, channel, event, error}
+  use pkg.types.{broker, channel, event, error}
 
-	/// Publishes an event to a channel in a broker.
-	publish: func(b: broker, c: channel, e: event) -> result<_, error>
+  /// Publishes an event to a channel in a broker.
+  publish: func(b: broker, c: channel, e: event) -> result<_, error>
 }
 
 /// An interface for a generic consumer.
 interface consumer {
     use pkg.types.{broker, channel, subscription-token, error}
 
-	/// Subscribes to a channel in a broker.
-  	subscribe: func(b: broker, c: channel) -> result<subscription-token, error>
+  /// Subscribes to a channel in a broker.
+  subscribe: func(b: broker, c: channel) -> result<subscription-token, error>
 
-	/// Unsubscribes from a channel via subscription token.
-  	unsubscribe: func(b: broker, st: subscription-token) -> result<_, error>
+  /// Unsubscribes from a channel via subscription token.
+  unsubscribe: func(b: broker, st: subscription-token) -> result<_, error>
 }
 
 default world pingpong {
-    import producer: self.producer
-    import consumer: self.consumer
-    import keyvalue: pkg.keyvalue.wasmcloud-kv
-    export pingpong-guest: self.guest
+  import producer: self.producer
+  import consumer: self.consumer
+  import keyvalue: pkg.keyvalue.wasmcloud-kv
+  export handler: pkg.handler
 }
