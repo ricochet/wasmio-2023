@@ -9,10 +9,12 @@ use crate::{
     producer::publish,
 };
 
+use handler::Event;
+
 struct Pingpong;
 
-impl pingpong_guest::PingpongGuest for Pingpong {
-    fn pingpong() -> String {
+impl handler::Handler for Pingpong {
+    fn on_receive(e: Event) -> Result<(), u32> {
         // let my_pub = Pub::open("my-messaging")?;
         // let my_sub = Sub::open("my-messaging")?;
         // let ping_pong_sub_tok = my_sub.subscribe("ping")?;
@@ -58,7 +60,9 @@ impl pingpong_guest::PingpongGuest for Pingpong {
         //     }
         // }
 
-        format!("made it")
+        println!("made it");
+
+        Ok(())
     }
 }
 
