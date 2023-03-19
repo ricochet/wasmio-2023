@@ -24,10 +24,10 @@ adaption step is temporary until preview 2 stabilizes.
 
 ```bash
 cd pingpong
-cargo build --target wasm32-wasi
+cargo build --target wasm32-wasi --release
 
 # now migrate from WASI preview1 to preview2 (to a wasm component)
-wasm-tools component new --output ../deploy/components/pingpong.component.wasm --adapt ../wasi_snapshot_preview1.wasm ../target/wasm32-wasi/debug/pingpong.wasm
+wasm-tools component new --output ../deploy/components/pingpong.component.wasm --adapt ../wasi_snapshot_preview1.wasm ../target/wasm32-wasi/release/pingpong.wasm
 ```
 
 Let's take a look at the component we created.
@@ -125,6 +125,8 @@ Now to make this work end-to-end, we also need a new provider that we can run lo
 
 ```bash
 # launch a wasi-messaging enabled provider
+
+open http://localhost:22000/
 
 # todo --js-domain cosmonic ?
 wash ctl start provider --host-id <host-id> <provider-ref>
