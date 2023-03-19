@@ -1,0 +1,9 @@
+dependencies:
+  messaging-types:
+    path: messaging.wasmCloud.wasm
+  producer:
+    path: messaging.wasmCloud.wasm
+  keyvalue:
+    path: keyvalue.wasmCloud.wasm
+  actor:
+    path: actor.component.wasm

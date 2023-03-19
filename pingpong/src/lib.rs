@@ -15,52 +15,70 @@ struct Pingpong;
 
 impl handler::Handler for Pingpong {
     fn on_receive(e: Event) -> Result<(), u32> {
-        // let my_pub = Pub::open("my-messaging")?;
-        // let my_sub = Sub::open("my-messaging")?;
-        // let ping_pong_sub_tok = my_sub.subscribe("ping")?;
-        // let keyvalue = Keyvalue::open("my-container")?;
         println!(">>> Listening...");
 
-        // todo on receive
-        // let msg = my_sub.receive(&ping_pong_sub_tok)?;
-        // let msg;
+        let data = e.data.unwrap();
+        let msg = String::from_utf8(data).unwrap();
 
-        // if !msg.is_empty() {
-        //     let msg_s = String::from_utf8(msg)?;
-        //     match msg_s.as_str() {
-        //         "ping" => {
-        //             let ret_msg = format!(
-        //                 "pong {:?}x",
-        //                 match keyvalue.get("increment") {
-        //                     Ok(curr_val) => {
-        //                         let curr_val_s = String::from_utf8(curr_val)?;
-        //                         let increment_count = curr_val_s.as_str().parse::<u32>()? + 1;
-        //                         keyvalue
-        //                             .set("increment", increment_count.to_string().as_bytes())?;
+        if !msg.is_empty() {
+            let broker = open_broker("my-messaging")?;
 
-        //                         increment_count
-        //                     }
-        //                     Err(_) => {
-        //                         keyvalue.set("increment", "1".as_bytes())?;
+            match msg.as_str() {
+                "ping" => {
+                    let ret_msg = format!(
+                        "pong {:?}x",
+                        match keyvalue::get("increment") {
+                            Ok(curr_val) => {
+                                let increment_count = curr_val.parse::<i32>().unwrap() + 1;
+                                keyvalue::set("increment", &increment_count.to_string());
 
-        //                         1
-        //                     }
-        //                 }
-        //             );
+                                increment_count
+                            }
+                            Err(_) => {
+                                keyvalue::set("increment", "1");
 
-        //             publish(ret_msg.as_bytes(), "pong")?;
-        //         }
-        //         "reset" => {
-        //             keyvalue.set("increment", "0".as_bytes())?;
-        //             publish("pong 0x".as_bytes(), "pong");
-        //         }
-        //         _ => {
-        //             println!("unknown command: {}", msg_s.as_str());
-        //         }
-        //     }
-        // }
+                                1
+                            }
+                        }
+                    );
 
-        println!("made it");
+                    let new_event = EventParam {
+                        data: Some(ret_msg.as_bytes()),
+                        id: "123",
+                        source: "rust",
+                        specversion: "1.0",
+                        ty: "com.my-messaing.rust.fizzbuzz",
+                        datacontenttype: None,
+                        dataschema: None,
+                        subject: Some("pong"),
+                        time: None,
+                        extensions: None,
+                    };
+
+                    println!(">>> Publishing: {:#?}", new_event);
+                    publish(broker, messaging_types::Channel::Topic("pong"), new_event)?;
+                }
+                "reset" => {
+                    let new_event = EventParam {
+                        data: Some("pong 0x".as_bytes()),
+                        id: "123",
+                        source: "rust",
+                        specversion: "1.0",
+                        ty: "com.my-messaing.rust.fizzbuzz",
+                        datacontenttype: None,
+                        dataschema: None,
+                        subject: Some("reset"),
+                        time: None,
+                        extensions: None,
+                    };
+                    keyvalue::set("increment", "0");
+                    publish(broker, messaging_types::Channel::Topic("ping"), new_event);
+                }
+                _ => {
+                    println!("unknown command: {}", msg);
+                }
+            }
+        }
 
         Ok(())
     }

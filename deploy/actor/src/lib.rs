@@ -45,7 +45,8 @@ impl actor::Actor for Actor {
                 }
             }
             _ => {
-                let msg = "invalid invocation on adapter. Expecting Handler.on_receive";
+                let msg =
+                    format!("invalid invocation on adapter. Operation [{operation}] not supported");
                 println!("{msg}");
                 Err(msg.to_string())
             }

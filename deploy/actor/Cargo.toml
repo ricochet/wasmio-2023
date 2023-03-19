@@ -11,3 +11,5 @@ wit-bindgen = { workspace = true, features = ["default"] }
 serde = { workspace = true }
 rmp-serde = { workspace = true }
 serde_json = { workspace = true, features = ["std"] }
+wasmbus-rpc = "0.12.0"
+wasmcloud-interface-keyvalue = "0.9.1"
