@@ -19,6 +19,7 @@ impl handler::Handler for Pingpong {
 
         let data = e.data.unwrap();
         let msg = String::from_utf8(data).unwrap();
+        // e.subject // ping or pong
 
         if !msg.is_empty() {
             let broker = open_broker("my-messaging")?;
@@ -47,7 +48,7 @@ impl handler::Handler for Pingpong {
                         id: "123",
                         source: "rust",
                         specversion: "1.0",
-                        ty: "com.my-messaing.rust.fizzbuzz",
+                        ty: "com.my-messaging.rust.fizzbuzz",
                         datacontenttype: None,
                         dataschema: None,
                         subject: Some("pong"),
